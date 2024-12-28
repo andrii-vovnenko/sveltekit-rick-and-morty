@@ -1,6 +1,6 @@
 overwrite: true
 schema: "https://rickandmortyapi.com/graphql"
-documents: "src/lib/graphql/queries/characters.ts"
+documents: "src/lib/graphql/queries/*"
 generates:
   src/lib/graphql/types.ts:
     plugins:

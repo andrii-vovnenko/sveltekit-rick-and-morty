@@ -206,4 +206,11 @@ export type GetCharactersQueryVariables = Exact<{
 }>;
 
 
-export type GetCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, status?: string | null, species?: string | null, image?: string | null } | null> | null } | null };
+export type GetCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', info?: { __typename?: 'Info', next?: number | null } | null, results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, episode: Array<{ __typename?: 'Episode', name?: string | null, episode?: string | null, id?: string | null } | null> } | null> | null } | null };
+
+export type GetEpisodeQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetEpisodeQuery = { __typename?: 'Query', episode?: { __typename?: 'Episode', name?: string | null, air_date?: string | null, characters: Array<{ __typename?: 'Character', name?: string | null } | null> } | null };

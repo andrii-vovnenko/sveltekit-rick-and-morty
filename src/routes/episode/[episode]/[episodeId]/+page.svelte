@@ -1,13 +1,20 @@
 <script lang="ts">
   import { page } from '$app/stores';
-
-
-  $: episode = $page.params.episode;
+	import { fetchEpisodeById } from '$lib/graphql/services/episodes';
+	import { onMount } from 'svelte';
+  
   $: episodeId = $page.params.episodeId;
+  let episodeName: string = '';
+
+  onMount(async () => {
+    const episode = await fetchEpisodeById(episodeId);
+    episodeName = episode.name;
+    console.log(episode);
+  });
 
 </script>
 
-<div>
-  <h1>Episode {episode}</h1>
+<div class="container">
+  <h1>{episodeName}</h1>
   <p>Episode ID: {episodeId}</p>
 </div>
