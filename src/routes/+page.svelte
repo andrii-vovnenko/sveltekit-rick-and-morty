@@ -85,7 +85,7 @@
     <ul>
       {#each result as episode}
         <li>
-          <a href="/{episode.episode}/{episode.id}">{episode.episode} - {episode.name}</a>
+          <a href="/episode/{episode.episode}/{episode.id}">{episode.episode} - {episode.name}</a>
         </li>
       {/each}
     </ul>

@@ -32,7 +32,7 @@ export const fetchEpisodesByCharacters = async (name: string | null = null): Pro
       page++;
     }
     
-    return episodesMap.size ? Array.from(episodesMap.values()).sort((a, b) => a.id - b.id) : [];
+    return episodesMap.size ? Array.from(episodesMap.values()).sort((a, b) => Number(a.id) -Number(b.id)) : [];
   } catch (error) {
     console.error('Error fetching characters:', error);
     throw error;
