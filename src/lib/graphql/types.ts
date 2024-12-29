@@ -213,4 +213,4 @@ export type GetEpisodeQueryVariables = Exact<{
 }>;
 
 
-export type GetEpisodeQuery = { __typename?: 'Query', episode?: { __typename?: 'Episode', name?: string | null, air_date?: string | null, characters: Array<{ __typename?: 'Character', name?: string | null } | null> } | null };
+export type GetEpisodeQuery = { __typename?: 'Query', episode?: { __typename?: 'Episode', name?: string | null, air_date?: string | null, characters: Array<{ __typename?: 'Character', name?: string | null, image?: string | null } | null> } | null };

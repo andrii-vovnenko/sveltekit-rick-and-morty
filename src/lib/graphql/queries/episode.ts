@@ -7,6 +7,7 @@ export const GET_EPISODE = gql`
       air_date
       characters {
         name
+        image
       }
     }
   }
