@@ -1,13 +1,29 @@
 <script lang="ts">
   import { page } from '$app/stores';
 	import { fetchEpisodeById, type CharacterData } from '$lib/graphql/services/episodes';
-	import type { Character } from '$lib/graphql/types';
 	import { onMount } from 'svelte';
   
-  $: episodeId = $page.params.episodeId;
+  const episodeId = $page.params.episodeId;
   let episodeName: string = '';
   let characters: CharacterData[] = [];
   let loading = true;
+  const { season, episode } = parseEpisodePath($page.params.episode);
+
+  function parseEpisodePath(episodePath: string): { season: number, episode: number } {
+    const match = episodePath.match(/\D(?<season>\d+)\D(?<episode>\d+)/);
+
+    const result = {
+      season: 0,
+      episode: 0,
+    };
+
+    if (match && match.groups) {
+      result.season = parseInt(match.groups.season, 10);
+      result.episode = parseInt(match.groups.episode, 10);
+    }
+
+    return result;
+  }
 
   onMount(async () => {
     const episode = await fetchEpisodeById(episodeId)
@@ -29,7 +45,10 @@
   {#if loading}
     <p>Loading...</p>
   {:else}
-    <h1>{episodeName}</h1>
+    <div class="header-container">
+      <h1>{episodeName}</h1>
+      <p>{`Season - ${season} Episode - ${episode}`}</p>  
+    </div>
     <ul class="carousel-container">
       {#each characters as character}
         <li class="carousel-slide">
@@ -42,6 +61,18 @@
 </div>
 
 <style>
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 24px;
+    padding-bottom: 6px;
+    h1, p {
+      margin: 0;
+      padding: 0;
+    }
+  }
   .carousel-container {
     width: 100%;
     overflow-x: auto;
