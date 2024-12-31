@@ -3,7 +3,14 @@
   import '../app.css'
 </script>
 <div class="layout">
-  <div class="content">
+  <div class="container body">
+    <div class="navigation">
+      <ul>
+        <li>
+          <a href="/">Main</a>
+        </li>
+      </ul>
+    </div>
     <slot />
   </div>
   
@@ -17,7 +24,9 @@
     flex-direction: column;
     min-height: 100dvh;
     
-    .content {
+    .body {
+      display: flex;
+      flex-direction: column;
       flex-grow: 1;
     }
   }

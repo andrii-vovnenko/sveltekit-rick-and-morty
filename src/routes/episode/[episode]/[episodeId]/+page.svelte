@@ -91,6 +91,8 @@
       align-items: center;
       scroll-snap-align: center;
       position: relative;
+      padding-bottom: 32px;
+      background-color: #fff;
       .name {
         position: absolute;
         text-shadow: #474747 0px 3px 5px;
