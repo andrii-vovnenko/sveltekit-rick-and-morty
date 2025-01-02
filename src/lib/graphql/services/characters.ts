@@ -1,8 +1,10 @@
 import { client } from '../client';
 import type { Episode, Characters } from '../generated';
 import { GET_CHARACTERS } from '../queries/characters';
+export type FetchEpisodesByCharactersResult = Map<string, Episode[]>;
 
-export const fetchEpisodesByCharacters = async (name: string | null = null): Promise<Episode[]> => {
+export const fetchEpisodesByCharacters = async (name: string | null = null): Promise<FetchEpisodesByCharactersResult> => {
+  const characterToEpisodesMap: FetchEpisodesByCharactersResult = new Map();
   const episodesMap: Map<string, Episode> = new Map();
   let page = 1;
 
@@ -21,6 +23,8 @@ export const fetchEpisodesByCharacters = async (name: string | null = null): Pro
       }
 
       for (const character of data.results) {
+        const characterName: string = character?.name as string;
+        characterToEpisodesMap.set(characterName, character?.episode as Episode[]);
         const episodes = (character?.episode || []) as Episode[];
           episodes.forEach((episode) => episodesMap.set(episode?.id as string, episode));
       }
@@ -31,8 +35,8 @@ export const fetchEpisodesByCharacters = async (name: string | null = null): Pro
 
       page++;
     }
-    
-    return episodesMap.size ? Array.from(episodesMap.values()).sort((a, b) => Number(a.id) -Number(b.id)) : [];
+
+    return characterToEpisodesMap;
   } catch (error) {
     console.error('Error fetching characters:', error);
     throw error;

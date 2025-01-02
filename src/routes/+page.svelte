@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { fetchEpisodesByCharacters } from '$lib/graphql/services/characters';
+  import { fetchEpisodesByCharacters, type FetchEpisodesByCharactersResult } from '$lib/graphql/services/characters';
   import type { Episode } from '$lib/graphql/types';
 
   let query: string = '';
   let searchBy: 'character' | 'episode' = 'character';
-  let result: Episode[] = [];
+  let result: FetchEpisodesByCharactersResult = new Map();
   let errorMessage: string = '';
   let isLoading: boolean = false;
   let noResults: boolean = false;
@@ -29,7 +29,7 @@
     try {
       result = await fetchEpisodesByCharacters(query);
       
-      if (result.length === 0) {
+      if (!result.size) {
         noResults = true;
       }
     } catch (error) {
@@ -81,12 +81,17 @@
     <p>No results found.</p>
   {/if}
 
-  {#if result.length > 0 && !noResults}
+  {#if result.size > 0 && !noResults}
     <ul>
-      {#each result as episode}
-        <li>
-          <a href="/episode/{episode.episode}/{episode.id}">{episode.episode} - {episode.name}</a>
-        </li>
+      {#each result.keys() as characterName}
+        <p>{characterName}</p>
+        <ul>
+          {#each (result.get(characterName) as Episode[]) as episode}
+            <li>
+              <a href="/episode/{episode.episode}/{episode.id}">{episode.episode} - {episode.name}</a>
+            </li>
+          {/each}
+        </ul>
       {/each}
     </ul>
   {/if}
