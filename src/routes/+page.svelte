@@ -4,7 +4,7 @@
 
   let query: string = '';
   let searchBy: 'character' | 'episode' = 'character';
-  let result: FetchEpisodesByCharactersResult = new Map();
+  let result: FetchEpisodesByCharactersResult = [];
   let errorMessage: string = '';
   let isLoading: boolean = false;
   let noResults: boolean = false;
@@ -29,7 +29,7 @@
     try {
       result = await fetchEpisodesByCharacters(query);
       
-      if (!result.size) {
+      if (!result.length) {
         noResults = true;
       }
     } catch (error) {
@@ -81,12 +81,17 @@
     <p>No results found.</p>
   {/if}
 
-  {#if result.size > 0 && !noResults}
+  {#if result.length > 0 && !noResults}
     <ul>
-      {#each result.keys() as characterName}
-        <p>{characterName}</p>
-        <ul>
-          {#each (result.get(characterName) as Episode[]) as episode}
+      {#each result as character}
+        <div class="character-title">
+          <div class="circle">
+            <img src="{character.image}" alt="{character.name}">
+          </div>
+          <p class="character-name">{character.name}</p>
+        </div>
+        <ul class="episode-list">
+          {#each (character.episode as Episode[]) as episode}
             <li>
               <a href="/episode/{episode.episode}/{episode.id}">{episode.episode} - {episode.name}</a>
             </li>
@@ -109,5 +114,25 @@
   button[disabled] {
     background-color: gray;
     cursor: not-allowed;
+  }
+  .character-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .circle {
+      border: 4px solid rgba(200,200,200,0.4);
+      border-radius: 50%;	/* relative value */
+      height: 80px;
+      width: 80px;
+    }
+    .circle img {
+      border-radius: 50%;
+    }
+    .character-name {
+      margin: 0;
+    }
+  }
+  .episode-list {
+    padding-left: 20px;
   }
 </style>

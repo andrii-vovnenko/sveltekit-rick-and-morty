@@ -1,10 +1,11 @@
 import { client } from '../client';
-import type { Episode, Characters } from '../generated';
+import type { Episode, Characters, Character } from '../generated';
 import { GET_CHARACTERS } from '../queries/characters';
-export type FetchEpisodesByCharactersResult = Map<string, Episode[]>;
+export type FetchEpisodesByCharactersResultOld = Map<string, Episode[]>;  
+export type FetchEpisodesByCharactersResult = Character[];
 
 export const fetchEpisodesByCharacters = async (name: string | null = null): Promise<FetchEpisodesByCharactersResult> => {
-  const characterToEpisodesMap: FetchEpisodesByCharactersResult = new Map();
+  const characterToEpisodesMap: FetchEpisodesByCharactersResult = [];
   const episodesMap: Map<string, Episode> = new Map();
   let page = 1;
 
@@ -18,20 +19,9 @@ export const fetchEpisodesByCharacters = async (name: string | null = null): Pro
       }
       const data: Characters = result.data.characters;
       
-      if (!data.results?.length) {
-        break;
-      }
-
-      for (const character of data.results) {
-        const characterName: string = character?.name as string;
-        characterToEpisodesMap.set(characterName, character?.episode as Episode[]);
-        const episodes = (character?.episode || []) as Episode[];
-          episodes.forEach((episode) => episodesMap.set(episode?.id as string, episode));
-      }
-
-      if (!data.info?.next) {
-        break;
-      }
+      if (!data.results?.length || !data.info?.next) break;
+      
+      characterToEpisodesMap.push(...(data.results as Character[]));
 
       page++;
     }
