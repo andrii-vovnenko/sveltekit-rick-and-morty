@@ -78,9 +78,14 @@
     overflow-x: auto;
     display: flex;
     width: 100%;
-    gap: 8px;
     align-items: center;
     scroll-snap-type: x mandatory;
+
+    :hover {
+      & ~ .carousel-slide {
+        transform: translateX(150px);
+      }
+    }
     .carousel-slide {
       flex-grow: 1;
       flex-shrink: 0;
@@ -89,17 +94,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      scroll-snap-align: center;
       position: relative;
-      padding-bottom: 32px;
       background-color: #fff;
+      box-shadow: -2rem 0 3rem -2rem #000;
       .name {
-        position: absolute;
         text-shadow: #474747 0px 3px 5px;
-        bottom: 0;
         font-size: 24px;
         font-weight: 700;
         color: #000;
+      }
+      &:not(:first-child) {
+        position: relative;
+        margin-left: -150px;
       }
     }
   }
