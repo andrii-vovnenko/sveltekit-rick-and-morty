@@ -80,12 +80,6 @@
     width: 100%;
     align-items: center;
     scroll-snap-type: x mandatory;
-
-    :hover {
-      & ~ .carousel-slide {
-        transform: translateX(150px);
-      }
-    }
     .carousel-slide {
       flex-grow: 1;
       flex-shrink: 0;
@@ -106,6 +100,14 @@
       &:not(:first-child) {
         position: relative;
         margin-left: -150px;
+      }
+      transition: transform 0.2s;
+      &:hover {
+        transform: scale(1.1) rotate(-5deg);
+
+        ~ .carousel-slide {
+          transform: translateX(170px);
+        }
       }
     }
   }
