@@ -80,6 +80,7 @@
     width: 100%;
     align-items: center;
     scroll-snap-type: x mandatory;
+    padding: 30px 0;
     .carousel-slide {
       flex-grow: 1;
       flex-shrink: 0;
@@ -91,11 +92,16 @@
       position: relative;
       background-color: #fff;
       box-shadow: -2rem 0 3rem -2rem #000;
+      max-width: 300px;
       .name {
         text-shadow: #474747 0px 3px 5px;
         font-size: 24px;
         font-weight: 700;
         color: #000;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 100%;
       }
       &:not(:first-child) {
         position: relative;
@@ -104,6 +110,7 @@
       transition: transform 0.2s;
       &:hover {
         transform: scale(1.1) rotate(-5deg);
+        z-index: 1;
 
         ~ .carousel-slide {
           transform: translateX(170px);
