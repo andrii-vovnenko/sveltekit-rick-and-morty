@@ -53,7 +53,7 @@
       {#each characters as character}
         <li class="carousel-slide">
           <img width="300" height="300" loading="lazy" src="{character.image}" alt="{character.name}"/>
-          <span class="name">{character.name}</span>
+          <!-- <span class="name">{character.name}</span> -->
         </li>
       {/each}
     </ul>
@@ -93,6 +93,10 @@
       background-color: #fff;
       box-shadow: -2rem 0 3rem -2rem #000;
       max-width: 300px;
+      border-radius: 50%;
+      img {
+        border-radius: 50%;
+      }
       .name {
         text-shadow: #474747 0px 3px 5px;
         font-size: 24px;
