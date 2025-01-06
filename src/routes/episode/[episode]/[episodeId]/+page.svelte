@@ -53,7 +53,26 @@
       {#each characters as character}
         <li class="carousel-slide">
           <img width="300" height="300" loading="lazy" src="{character.image}" alt="{character.name}"/>
-          <!-- <span class="name">{character.name}</span> -->
+          <svg
+            class="name"
+            viewBox="0 0 300 300"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+          >
+            <path
+              id="circlePath"
+              d="
+                M 150, 0
+                a 150,150 0 1,1 0,300
+                a 150,150 0 1,1 0,-300
+              "
+            />
+            <text fill="#fff" dy="-5">
+              <textPath href="#circlePath">
+                {character.name}
+              </textPath>
+            </text>
+          </svg>
         </li>
       {/each}
     </ul>
@@ -80,7 +99,7 @@
     width: 100%;
     align-items: center;
     scroll-snap-type: x mandatory;
-    padding: 30px 0;
+    padding: 50px 0;
     .carousel-slide {
       flex-grow: 1;
       flex-shrink: 0;
@@ -98,14 +117,11 @@
         border-radius: 50%;
       }
       .name {
-        text-shadow: #474747 0px 3px 5px;
-        font-size: 24px;
-        font-weight: 700;
-        color: #000;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        max-width: 100%;
+        position: absolute;
+        overflow: visible;
+        text {
+          font-size: 36px;
+        }
       }
       &:not(:first-child) {
         position: relative;
@@ -117,7 +133,7 @@
         z-index: 1;
 
         ~ .carousel-slide {
-          transform: translateX(170px);
+          transform: translateX(200px);
         }
       }
     }
